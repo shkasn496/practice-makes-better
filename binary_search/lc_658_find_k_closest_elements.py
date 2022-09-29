@@ -4,7 +4,7 @@ Success
 Details 
 Runtime: 359 ms, faster than 82.81% of Python3 online submissions for Find K Closest Elements.
 Memory Usage: 15.5 MB, less than 80.94% of Python3 online submissions for Find K Closest Elements.
-TC: O(n*log(k)) SC:O(k)
+TC: O(n+log(k))+klogk SC:O(k)
 """
 class Solution:
     def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
