@@ -21,10 +21,10 @@ class Solution1:
             hare=nums[hare]
         return tortoise
 
-'''
-Alternative clever solution. Takes TC: O(nlogn), SC:O(1)
-Uses binary search
-'''
+    '''
+    Alternative clever solution. Takes TC: O(nlogn), SC:O(1)
+    Uses binary search
+    '''
     def findDuplicate(self, nums: List[int]) -> int:
         # left and right represent range of values present in nums
         left, right = 1, len(nums)-1
