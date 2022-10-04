@@ -14,10 +14,10 @@ class Solution:
         while left<=right:
             mid=left+(right-left)//2
             if nums[mid]==target:return mid
-            if nums[left]<=nums[mid]: #left space
-                if nums[left]<=target<=nums[mid]:right=mid-1
+            if nums[left]<=nums[mid]: #ascending order on left space
+                if nums[left]<=target<nums[mid]:right=mid-1
                 else:left=mid+1
-            else: #right space
-                if nums[mid]<=target<=nums[right]:left=mid+1
+            else: #ascending order on right space
+                if nums[mid]<target<=nums[right]:left=mid+1
                 else:right=mid-1
         return -1
