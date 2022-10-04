@@ -34,4 +34,65 @@ class Solution:
                 else:
                     indices.append(arr[right])
                     right+=1
-        return sorted(indices)  
+        return sorted(indices)
+
+"""
+Better solution: Find closest idx first, then do k iterations
+Success
+Details 
+Runtime: 301 ms, faster than 96.06% of Python3 online submissions for Find K Closest Elements.
+Memory Usage: 15.6 MB, less than 46.43% of Python3 online submissions for Find K Closest Elements.
+TC: O(logn+k)
+SC:O(1)
+"""
+class Solution:
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        N=len(arr)
+        def get_closest_number_to_x():
+            l, r = 0, N-1
+            while l<r-1:
+                m=l+(r-l)//2
+                if arr[m]==x:return m
+                elif arr[m]>x:r=m
+                else:l=m
+            dist_l, dist_r=abs(arr[l]-x),abs(arr[r]-x)
+            return l if dist_l<=dist_r else r
+        
+        target_idx= get_closest_number_to_x()
+        #initialized pointers to target idx
+        left_idx=right_idx=target_idx
+        
+        while right_idx-left_idx+1<k: #iterate loop while pointers don't match k
+            new_left, new_right=left_idx-1, right_idx+1
+            if new_left>=0 and new_right<N:
+                dist_l, dist_r=abs(arr[new_left]-x),abs(arr[new_right]-x)
+                if dist_l<=dist_r:left_idx-=1
+                else:right_idx+=1
+            elif new_left<0 and new_right<N:right_idx+=1
+            else:left_idx-=1
+        return arr[left_idx:right_idx+1]
+
+"""
+Best solution: Just start with two pointers at ends of list and reduce to k
+Success
+Details 
+Runtime: 281 ms, faster than 99.47% of Python3 online submissions for Find K Closest Elements.
+Memory Usage: 15.4 MB, less than 81.61% of Python3 online submissions for Find K Closest Elements.
+TC: O(n-k)
+SC:O(1)
+"""
+class Solution:
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        left, right= 0, len(arr)-1
+        while right -left+1>k:
+            if abs(arr[left]-x)<=abs(arr[right]-x):right-=1
+            else:left+=1
+        return arr[left:right+1]
+
+# Case 1: when large N, small K
+# Solution 2 will work best  TC: O(log(N)+k) ~= O(logN)
+# Solution 3 wont work as good for this case TC: O(N-k) ~= O(N)
+
+# Case 2: When large N, large K
+# Solution 2 wont work as good for this case  TC: O(log(N)+k) ~= O(logN+log(N)) ~= O(logN)
+# Solution 3 will work best TC: O(N-k) ~= O(N-N) ~= O(1)
