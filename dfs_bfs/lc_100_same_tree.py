@@ -8,7 +8,22 @@
 #         self.right = right
 
 """
-Solution 1: Iterative BFS
+Solution 1: Recursive DFS
+Success
+Details 
+Runtime: 29 ms, faster than 97.11% of Python3 online submissions for Same Tree.
+Memory Usage: 13.9 MB, less than 75.45% of Python3 online submissions for Same Tree.
+TC: O(n)
+SC: O(n)+ O(logn) (recursive stack)
+"""
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if p and q:
+            return p.val==q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        return p is q
+
+"""
+Solution 2: Iterative BFS
 Success
 Details 
 Runtime: 39 ms, faster than 80.98% of Python3 online submissions for Same Tree.
@@ -31,21 +46,6 @@ class Solution:
             if node1.right or node2.right:queue.put((node1.right, node2.right))
         del queue
         return True
-
-"""
-Solution 2: Recursive DFS
-Success
-Details 
-Runtime: 29 ms, faster than 97.11% of Python3 online submissions for Same Tree.
-Memory Usage: 13.9 MB, less than 75.45% of Python3 online submissions for Same Tree.
-TC: O(n)
-SC: O(n)+ O(logn) (recursive stack)
-"""
-class Solution:
-    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        if p and q:
-            return p.val==q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
-        return p is q
 
 """
 Solution 3: Iterative DFS
