@@ -6,7 +6,7 @@ Runtime 852 ms Beats 97.8%
 Memory 28.6 MB Beats 40.73%
 
 TC : O(nlogn)
-SC: O(1)
+SC: O(N)
 """
 class Solution:
     def minIncrementForUnique(self, nums: List[int]) -> int:
