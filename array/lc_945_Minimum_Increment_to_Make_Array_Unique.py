@@ -2,8 +2,8 @@
 """
 Solution 1: Sort first. Save prev as biggest number seen so far. minMoves += prev- curr + 1
 
-Runtime 852 ms Beats 97.8%
-Memory 28.6 MB Beats 40.73%
+Runtime 806 ms Beats 99.49%
+Memory 28.5 MB Beats 44.87%
 
 TC : O(nlogn)
 SC: O(N)
