@@ -62,33 +62,31 @@ SC: O(m*n)
 class Solution:
     def numDistinctIslands(self, grid: List[List[int]]) -> int:
         m, n = len(grid), len(grid[0])
-        directions = [(-1,0), (1,0), (0,-1), (0,1)]
-        connected_island=set()
+        distinctIslands = set()
+        directions = [(-1,0), (1,0), (0,1), (0,-1)]
 
-        def find_island(r, c):
-            if r < 0 or c < 0 or r >= m or c >= n \
-            or grid[r][c]==0 or grid[r][c]==-1:return []
-            grid[r][c]=-1 # mark as visited
-            island_global_coords=[(r,c)]
+        def found_island_coords(r, c):
+            if not 0<=r<m or not 0<=c<n or grid[r][c] in {0,-1}:return []
+            grid[r][c]=-1
+            island_coords=[(r,c)]
             for dr, dc in directions:
-                island_global_coords += find_island(r+dr, c+dc)
-            return island_global_coords
+                nr, nc = r+dr, c+dc
+                island_coords+=found_island_coords(nr, nc)
+            return island_coords
 
-        def convert_global_to_local_coords(island_coords):
-            r0,c0 = island_coords[0]
-            return tuple([(r-r0, c-c0) for (r, c) in island_coords])
+        def relative_island_coords(island_coords):
+            r,c = island_coords[0]
+            for i, (nr, nc) in enumerate(island_coords):
+                island_coords[i]=(nr-r, nc-c)
+            return tuple(island_coords)
 
         for r in range(m):
             for c in range(n):
-                island_coords=find_island(r,c) #global coords
-                if len(island_coords)==0:continue
-
-                # convert global coords to local coords
-                island_coords=convert_global_to_local_coords(island_coords) # stored as tuple
-
-                if island_coords not in connected_island: # save local coord as hash func in set 
-                    connected_island.add(island_coords)
-
-        unique=len(connected_island)
-        del directions, connected_island
-        return unique
+                island_coords = found_island_coords(r, c)
+                if len(island_coords)<1:continue
+                island_coords = relative_island_coords(island_coords)
+                if island_coords not in distinctIslands:
+                    distinctIslands.add(island_coords)
+        islandCount = len(distinctIslands)
+        del distinctIslands, directions
+        return islandCount
