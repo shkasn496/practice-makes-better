@@ -1,7 +1,7 @@
 # https://leetcode.com/problems/add-two-numbers/description/
 """
 Runtime 53 ms Beats 99.87%
-Memory 14 MB Beats 10.46%
+Memory 13.9 MB Beats 43.21%
 
 TC = SC = O(n)
 """
@@ -12,24 +12,20 @@ TC = SC = O(n)
 #         self.next = next
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        carry = 0
-        sum = ListNode()
-        head = sum
-        while l1 or l2:
-            val=carry
-            carry=0
-            if l1: 
-                val+=l1.val
-                l1 = l1.next
-            if l2: 
-                val+=l2.val
+        l3=ListNode()
+        head = l3
+        carry=0
+        while l1 or l2 or carry:
+            num3=carry
+            if l1:
+                num3+=l1.val
+                l1=l1.next
+            if l2:
+                num3+=l2.val
                 l2=l2.next
-            carry = val // 10
-            val = val % 10
-            sum.val = val            
-            if l1 or l2: 
-                sum.next = ListNode()
-                sum = sum.next
-
-        if carry: sum.next = ListNode(val=carry)
+            carry = num3 // 10
+            l3.val = num3 % 10
+            if l1 or l2 or carry: 
+                l3.next=ListNode()
+                l3=l3.next
         return head

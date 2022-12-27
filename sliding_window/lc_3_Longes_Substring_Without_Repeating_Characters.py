@@ -10,17 +10,18 @@ SC:O(k) where k=max length of sliding window
 """
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        if len(s)<=1:return len(s)
-        max_length = 0
-        start= end = 0
+        if len(s)<2:return len(s)
+        start,end=0,1
         substring=set()
-        while end < len(s):
-            if s[end] not in substring:
-                substring.add(s[end])
-                end+=1
-            else:
+        substring.add(s[start])
+        maxlength=1
+        while end<len(s):
+            if s[end] in substring:
                 substring.remove(s[start])
                 start+=1
-            max_length=max(len(substring), max_length)
+            else:
+                substring.add(s[end])
+                end+=1
+            maxlength=max(maxlength, len(substring))
         del substring
-        return max_length
+        return maxlength
