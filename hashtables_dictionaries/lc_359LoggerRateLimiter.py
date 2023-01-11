@@ -1,7 +1,7 @@
 # https://leetcode.com/problems/logger-rate-limiter/description/
 """
-Runtime 141 ms Beats 97.95% 
-Memory 20.8 MB Beats 36.83%
+Runtime 130 ms Beats 99.79%
+Memory 20.8 MB Beats 86.15%
 TC: O(1)
 SC: O(n)
 """
