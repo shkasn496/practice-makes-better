@@ -16,8 +16,8 @@ class Solution:
 
 """
 Solution 2: Further optimize space
-Runtime 27 ms Beats 94.11%
-Memory 13.9 MB Beats 68.54%
+Runtime 26 ms Beats 95.81%
+Memory 13.8 MB Beats 68.54%
 TC:O(m*n)
 SC:O(n)
 """
@@ -25,8 +25,7 @@ class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
         prev_dp =[1]*n #cache 1d array
         for i in range(1,m):
-            temp_dp=[0]*n
-            temp_dp[0]=1
+            temp_dp=[1]*n
             for j in range(1,n):
                 #up from prev_dp and left from temp_dp
                 temp_dp[j]=prev_dp[j]+temp_dp[j-1]
