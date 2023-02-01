@@ -1,4 +1,10 @@
 #https://leetcode.com/problems/sudoku-solver/
+"""
+Solution : Backtracking, recursion
+
+TC: O(9^m) where m==no of free spaces. max(m)=81
+SC: O(n^2) for stack space in each iteration
+"""
 class Solution:
     def solveSudoku(self, board: List[List[str]]) -> None:
         def conditions(r, c, n):
