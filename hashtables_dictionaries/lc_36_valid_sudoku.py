@@ -1,7 +1,8 @@
 # https://leetcode.com/problems/valid-sudoku/description/
 """
 Solution 1: Using a dictionary of sets
-
+Runtime 90 ms Beats 94.73%
+Memory 13.9 MB Beats 76.7%
 TC:O(n^2)
 SC:O(n^2)
 """
