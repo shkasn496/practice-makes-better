@@ -1,7 +1,8 @@
 #https://leetcode.com/problems/sudoku-solver/
 """
 Solution : Backtracking, recursion
-
+Runtime 523 ms Beats 42.17%
+Memory 13.9 MB Beats 69.88%
 TC: O(9^m) where m==no of free spaces. max(m)=81
 SC: O(n^2) for stack space in each iteration
 """
