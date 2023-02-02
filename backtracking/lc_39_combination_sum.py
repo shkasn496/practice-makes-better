@@ -5,6 +5,9 @@ Runtime 47 ms Beats 97.12%
 Memory 14.1 MB Beats 9.25%
 
 TC: O(N^T/M) where T is target, M is min value, N is list length
+    every step there is a choice to add the number 0-N times 
+    which is why it is N raised to T instead of 2 ^ T.
+
 SC: O(T/M) in the last level of recursion
 """
 class Solution:
