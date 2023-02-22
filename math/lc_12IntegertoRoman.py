@@ -44,3 +44,21 @@ class Solution:
             num%=no
             substring+=symbol*freq
         return substring
+
+"""
+Solution 3: Simpler code
+TC=SC=O(1)
+"""
+class Solution:
+    def intToRoman(self, num: int) -> str:
+        roman_mapping = [(1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'),
+                        (100, 'C'), (90, 'XC'), (50, 'L'), (40, 'XL'),
+                        (10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'), (1, 'I')]
+        output=[]
+        i=0
+        while num>0:
+            if num>=roman_mapping[i][0]:
+                num-=roman_mapping[i][0]
+                output.append(roman_mapping[i][1])
+            else:i+=1
+        return "".join(output)
