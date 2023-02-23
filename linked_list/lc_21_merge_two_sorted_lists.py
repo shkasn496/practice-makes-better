@@ -1,8 +1,8 @@
 # https://leetcode.com/problems/merge-two-sorted-lists/description/
 """
 Solution 1: Iterative solution
-Runtime 32 ms Beats 94.68% 
-Memory 13.8 MB Beats 98.69%
+Runtime 31 ms Beats 95.58%
+Memory 13.8 MB Beats 98.59%
 
 TC: O(m+n)
 SC:O(m+n)
@@ -14,19 +14,15 @@ SC:O(m+n)
 #         self.next = next
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        if not list1 or not list2:
-            if list1:return list1
-            return list2
-        list3=ListNode(0)
-        head = list3
+        if not list1 or not list2:return list1 if list1 else list2
+        prev = prehead = ListNode()
         while list1 and list2:
-            if list1.val<=list2.val:
-                list3.next=list1
+            if list1.val <= list2.val:
+                prev.next = list1
                 list1=list1.next
             else:
-                list3.next=list2
+                prev.next=list2
                 list2=list2.next
-            list3=list3.next
-        if list1:list3.next=list1
-        if list2:list3.next=list2
-        return head.next
+            prev=prev.next
+        prev.next=list1 or list2 #add leftover list
+        return prehead.next
