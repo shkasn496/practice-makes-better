@@ -14,13 +14,28 @@ Details
 Runtime: 29 ms, faster than 97.11% of Python3 online submissions for Same Tree.
 Memory Usage: 13.9 MB, less than 75.45% of Python3 online submissions for Same Tree.
 TC: O(n)
-SC: O(n)+ O(logn) (recursive stack)
+SC: O(n) (recursive stack)
 """
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         if p and q:
             return p.val==q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
         return p is q
+
+"""
+Solution 1.b: Recursive DFS
+Runtime 24 ms Beats 95.81%
+Memory 13.8 MB Beats 97.56%
+TC=SC=O(n)
+"""
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if not p or not q:return p==q
+        def dfs(node1, node2):
+            if not node1 and not node2:return True
+            if not node1 or not node2 or node1.val != node2.val:return False
+            return dfs(node1.left, node2.left) and dfs(node1.right, node2.right)
+        return dfs(p,q)
 
 """
 Solution 2: Iterative BFS
