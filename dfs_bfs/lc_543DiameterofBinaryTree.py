@@ -1,11 +1,10 @@
 # https://leetcode.com/problems/diameter-of-binary-tree/description/
 """
-Solution: DFS
-
-Runtime 43 ms Beats 92.52%
-Memory 16.2 MB Beats 82.70%
+Solution: Recursion
+Runtime 38 ms Beats 96.47%
+Memory 16.2 MB Beats 76.30%
 TC: O(n)
-SC:O(n)
+SC:O(n) Recursive stack
 """
 # Definition for a binary tree node.
 # class TreeNode:
@@ -16,13 +15,12 @@ SC:O(n)
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         if not root:return 0
-        self.max_diameter=0
-        def dfs(node):
+        self.diameter=0
+        def longest_path(node):
             if not node:return 0
-            left_height = dfs(node.left)
-            right_height = dfs(node.right)
-            node_max_height=1+max(left_height, right_height)
-            self.max_diameter=max(left_height+right_height, self.max_diameter)
-            return node_max_height
-        dfs(root)
-        return self.max_diameter
+            left=longest_path(node.left)
+            right=longest_path(node.right)
+            self.diameter=max(self.diameter, left+right)
+            return max(left,right)+1
+        longest_path(root)
+        return self.diameter
