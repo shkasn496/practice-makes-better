@@ -2,8 +2,8 @@
 """
 Solution : Backtracking
 
-Runtime 8303 ms Beats 34.95%
-Memory 13.9 MB Beats 91.58%
+Runtime 7213 ms Beats 59.45%
+Memory 13.8 MB Beats 90.75%
 
 TC: O(N⋅3^L ) where N is the number of cells in the board and L is the length of the word to be matched
 For the backtracking function, initially we could have at most 4 directions to explore, but further the 
@@ -19,23 +19,23 @@ SC:O(L) recursive stack space
 """
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        m,n = len(board),len(board[0])
-        directions=[(0,1),(0,-1),(1,0),(-1,0)]
-        def backtrack(r,c,i):
-            # conditions
-            if not 0<=r<m or not 0<=c<n or i>=len(word) or\
-            board[r][c]!=word[i] or board[r][c]=='#':return False
-            #goal
-            if i==len(word)-1 and board[r][c]==word[i]:return True
-            board[r][c]="#"
-            state=False
-            #choices
+        m,n = len(board), len(board[0])
+        if len(word)>m*n:return False
+        directions=[(0,1),(1,0),(0,-1),(-1,0)]
+        def backtrack(r, c, idx):
+            # Goal
+            if idx>=len(word):return True
+            #1. Conditions
+            if not 0<=r<m or not 0<=c<n or \
+            board[r][c]!=word[idx]:return False
+            #3. Choices
+            board[r][c]='#'#visited
             for dr,dc in directions:
-                state=backtrack(r+dr,c+dc,i+1)
-                if state:break
-            board[r][c]=word[i]
-            return state
+                if backtrack(r+dr, c+dc, idx+1):return True
+            board[r][c]=word[idx]#backtrack
+            return False
         for r in range(m):
             for c in range(n):
-                if backtrack(r,c,0): return True
+                if backtrack(r, c, 0):return True
+        del directions
         return False
