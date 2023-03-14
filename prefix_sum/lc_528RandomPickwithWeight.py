@@ -33,3 +33,20 @@ class Solution:
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(w)
 # param_1 = obj.pickIndex()
+
+"""
+Solution 2: Will give TLE but is simpler to understand
+
+"""
+class Solution:
+
+    def __init__(self, w: List[int]):
+        self.weights=[]
+        for i,_w in enumerate(w):
+            for _ in range(_w):
+                self.weights.append(i)
+        return
+
+    def pickIndex(self) -> int:
+        random_idx = random.uniform(0,len(self.weights))
+        return self.weights[random_idx]
