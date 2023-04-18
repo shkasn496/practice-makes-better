@@ -7,20 +7,13 @@ TC: O(nlogK)+O(n*k) where K is max no.of intervals.
                 O(n*k) is for flattening the schedule into intervals array
 SC:O(n)
 """
-"""
+
 # Definition for an Interval.
 class Interval:
     def __init__(self, start: int = None, end: int = None):
         self.start = start
         self.end = end
-"""
-"""
-# Definition for an Interval.
-class Interval:
-    def __init__(self, start: int = None, end: int = None):
-        self.start = start
-        self.end = end
-"""
+
 class Solution:
     def employeeFreeTime(self, schedule: '[[Interval]]') -> '[Interval]':
         # flatten schedule of employees to just intervals lists
