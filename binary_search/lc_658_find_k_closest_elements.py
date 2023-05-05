@@ -89,6 +89,21 @@ class Solution:
             else:left+=1
         return arr[left:right+1]
 
+"""
+Solution 4: Using a min heap
+
+TC:O(n)+klogk
+SC:O(n)
+"""
+import heapq
+class Solution:
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        if x<=arr[0]:return arr[:k]
+        if x>=arr[-1]:return arr[len(arr)-k:]
+        min_heap = [(abs(a-x),i) for i, a in enumerate(arr)]
+        heapq.heapify(min_heap)
+        return sorted([arr[heapq.heappop(min_heap)[1]] for _ in range(k)])
+
 # Case 1: when large N, small K
 # Solution 2 will work best  TC: O(log(N)+k) ~= O(logN)
 # Solution 3 wont work as good for this case TC: O(N-k) ~= O(N)
