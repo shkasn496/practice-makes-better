@@ -24,22 +24,19 @@ SC: O(n)
 """
 class Solution:
     def plusOne(self, digits: List[int]) -> List[int]:
-        if digits[-1] <9: 
+        if not digits:return digits
+        if digits[-1]<9:
             digits[-1]+=1
-            return digits
-        carry=0
-        for i in range(len(digits)-1, -1,-1):
-            if i == len(digits)-1 and digits[i]==9:
-                digits[i]=0
-                carry+=1
-            elif digits[i] <=9:
-                digits[i]+=carry
-                if digits[i]>9:
-                    carry=1
-                    digits[i]=0
-                else:
-                    carry=0
-                    break
-        if carry>0:
-            digits=[carry]+digits
-        return digits
+            return digits 
+        carry=1 #added plus one
+        output=[0] #remainder is 0
+        for i in range(len(digits)-2, -1, -1):
+            d = digits[i]
+            if carry:
+                elem = d+carry
+                carry = 0 if elem <= 9 else 1
+                if carry:elem = 0
+                output.append(elem)
+            else:output.append(d)
+        if carry:output.append(carry)
+        return reversed(output)
