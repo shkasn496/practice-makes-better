@@ -23,11 +23,16 @@ class Solution:
         return "".join(result)
 
 """
-Solution 2: Sort the dict by values and add to result
+Incorrect solution that got accepted in leetcode, not on lintcode
+
+Sort the dict by values and add to result
 Runtime 27 ms Beats 99.77%
 Memory 17.7 MB Beats 27.98%
 TC:O(nlogn)
 SC:O(n)
+
+Actually, this won't work on test case: "cccddddbbbaa"
+as output="ddddcccbbbaa" but the correct answer is "ddddbbbcccaa"
 """
 class Solution:
     def frequencySort(self, s: str) -> str:
