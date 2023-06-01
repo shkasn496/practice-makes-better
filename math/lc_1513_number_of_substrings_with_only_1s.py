@@ -32,9 +32,9 @@ SC:O(n)
 class Solution:
     def numSub(self, s: str) -> int:
         s=s.split('0')
-        ones_count, N = 0, len(s)
-        for i in range(N):
-            n=len(s[i])
+        ones_count = 0
+        for e in range(s):
+            n=len(e)
             ones_count+=n*(n+1)//2
         del s
         return ones_count%(10**9 + 7)
