@@ -108,10 +108,12 @@ class Solution:
             square_count+=matrix[row][0]
         for row in range(1,m):
             for col in range(1,n):
-                if matrix[row][col]==1 and matrix[row-1][col]>0 \
-                and matrix[row][col-1] > 0 and matrix[row-1][col-1] > 0:
-                    matrix[row][col]+= min(matrix[row-1][col],\
+                if matrix[row][col] and matrix[row-1][col] and \
+                matrix[row-1][col-1] and matrix[row][col-1]:
+                    min_ngbrs =  min(matrix[row-1][col],\
                      matrix[row][col-1],matrix[row-1][col-1])
-                square_count+=matrix[row][col]
+                    matrix[row][col]+= min_ngbrs
+                
+                square_count+=matrix[row][col]#there can be single squares as well
         del matrix
         return square_count
