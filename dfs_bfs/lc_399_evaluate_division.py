@@ -46,3 +46,37 @@ class Solution:
             graph[a][b]=value
             graph[b][a]=float(1/value)
         return graph
+
+"""
+Solution 2 : DFS
+Runtime 44 ms Beats 76.79% 
+Memory 16.5 MB Beats 28.10%
+TC: O(M*N) N=len(equations), M=len(values)
+SC: O(N+M) to store result
+    O(N) for  visited, recursive stack
+"""
+class Solution:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        graph = collections.defaultdict(dict)
+        for (a, b), val in zip(equations, values):
+            graph[a][b]=val
+            graph[b][a]=float(1/val)
+        def dfs(start_node, end_node, path, visited):
+            visited.add(start_node)
+            ngbrs = graph[start_node]
+            ret = -1.0
+            if end_node in ngbrs:return path*ngbrs[end_node]
+            else:
+                for node, val in ngbrs.items():
+                    if node in visited:continue
+                    ret = dfs(node, end_node, path*val, visited)
+                    if ret != -1.0:break
+            del visited
+            return ret
+        result = []
+        for a, b in queries:
+            if a not in graph or b not in graph:result.append(-1.0)
+            elif a==b:result.append(1.0)
+            else:result.append(dfs(a,b, 1.0, set()))
+        del graph
+        return result
