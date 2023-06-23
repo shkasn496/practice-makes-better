@@ -12,35 +12,37 @@ class Solution:
         if n==2:return logs[0][0]
         if len(logs)<n-1:return -1 #no time to make all friends
         logs.sort(key=lambda x:x[0]) #sort based on timestamp
+        # initially, treat every friend as it's own group
+        group_count = n
         uf = UnionFind(n)
-        groups=n
-        for timestamp, friend_a, friend_b in logs:
-            if uf.union(friend_a, friend_b):groups-=1
-            if groups==1:return timestamp
+        for ts, friend_a, friend_b in logs:
+            if uf.union(friend_a, friend_b):
+                group_count-=1
+            # moment when all individuals are connected
+            if group_count == 1:
+                del uf
+                return ts
+        # There are still more than one groups left,
+        #  i.e. not everyone is connected.
+        del uf
         return -1
-
-class UnionFind(object):
-    def __init__(self, size) -> None:
-        self.groups = {i:i for i in range(size)}#key:node, value:parent of node
+class UnionFind():
+    def __init__(self, size):
+        self.parent = {i:i for i in range(size)}
         self.rank = [0]*size
         return
     def find(self, x):
-        if self.groups[x]==x:
-            return x
-        return self.find(self.groups[x])
+        if self.parent[x]==x:return x
+        return self.find(self.parent[x])
     def union(self, x, y):
-        parent_x = self.find(x)
-        parent_y = self.find(y)
-        if parent_x==parent_y:#already in same group
-            return False
-        # Merge the lower-rank group into the higher-rank group.
-        if self.rank[parent_x]>self.rank[parent_y]:
-            self.groups[parent_y]=parent_x
-        elif self.rank[parent_x]<self.rank[parent_y]:
-            self.groups[parent_x]=parent_y
-        else:
-            self.groups[parent_y]=parent_x
+        parent_x, parent_y = self.find(x), self.find(y)
+        if parent_x==parent_y:return False
+        elif self.rank[parent_x]>self.rank[parent_y]:
+            self.parent[parent_y]=parent_x
             self.rank[parent_x]+=1
+        else:
+            self.parent[parent_x]=parent_y
+            self.rank[parent_y]+=1
         return True
 
 """
