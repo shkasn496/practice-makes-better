@@ -1,39 +1,41 @@
 # https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/description/
 """
 Solution 1: BFS
-Runtime 33 ms Beats 75.86%
-Memory 14.3 MB Beats 10.16%
-TC: O(n)
-SC: O(2*L) where L = level. At most, we will have 2 levels of nodes in the queue.
-At leaf level for a balanced tree, L = N/2 
-So, worst case SC= O(n)
+Runtime 37 ms Beats 97.56%
+Memory 16.6 MB Beats 31.46%
+TC:O(n)
+SC:O(n)
 """
-
 # Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
 from queue import Queue
 class Solution:
     def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root:return []
-        output = []
         queue = Queue()
-        queue.put((root,0))#node, level 
+        queue.put(root)
+        result = []
+        level = 0
         while not queue.empty():
-            node, level = queue.get()
-            while len(output)<=level:
-                output.append([])
-            output[level].append(node.val)
-            if node.left: queue.put((node.left, level+1))
-            if node.right: queue.put((node.right, level+1))
-        for level, lst in enumerate(output):
-            if level%2 !=0: #odd level
-                output[level]=reversed(lst)
+            nodes = queue.qsize()
+            level += 1
+            level_vals = []
+            for _ in range(nodes):
+                node = queue.get()
+                level_vals.append(node.val)
+                if node.left:queue.put(node.left)
+                if node.right:queue.put(node.right)
+            if level % 2 == 0: # even level from R -> L
+                result.append(list(reversed(level_vals)))
+            else: # odd level from L -> R
+                result.append(level_vals)
         del queue
-        return output
+        return result
 
 """
 Solution 2: DFS (most space optimized for balanced tree)
