@@ -3,7 +3,7 @@
 Solution 1: Using a minheap
 Runtime 510 ms Beats 83.60%
 Memory 27.3 MB Beats 41.25%
-TC: O(n)+O(nlogK) where logK is for heappush operations which can happen n times
+TC: O(nlogK) where logK is for heappush operations which can happen n times
 SC: O(k)
 """
 import heapq
