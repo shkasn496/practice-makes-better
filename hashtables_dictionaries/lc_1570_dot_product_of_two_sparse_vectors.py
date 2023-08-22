@@ -54,3 +54,30 @@ class SparseVector:
 # v1 = SparseVector(nums1)
 # v2 = SparseVector(nums2)
 # ans = v1.dotProduct(v2)
+
+"""
+Solution 3: Using hashmaps, but only iterate upto smallest max_idx of sparse vecor
+"""
+class SparseVector:
+    def __init__(self, nums: List[int]):
+        self.sv = {}
+        self.max_idx=0
+        for idx, num in enumerate(nums):
+            if num:
+                self.sv[idx]=num
+                self.max_idx=idx
+        return
+
+    # Return the dotProduct of two sparse vectors
+    def dotProduct(self, vec: 'SparseVector') -> int:
+        min_idx = min(self.max_idx, vec.max_idx)
+        dot_prod=0
+        for idx in range(min_idx+1):
+            if idx in self.sv and idx in vec.sv:
+                dot_prod += self.sv[idx]*vec.sv[idx]
+        return dot_prod
+
+# Your SparseVector object will be instantiated and called as such:
+# v1 = SparseVector(nums1)
+# v2 = SparseVector(nums2)
+# ans = v1.dotProduct(v2)
