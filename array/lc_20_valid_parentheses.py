@@ -12,14 +12,11 @@ class Solution:
         stack=[]
         mapping = {")":"(", "]":"[", "}":"{"}
         for c in s:
-            if c not in mapping: #found opening bracket
+            if c not in mapping: # open bracket
                 stack.append(c)
-            else:
-                if stack:
-                    if stack[-1]==mapping[c]:
-                        stack.pop()
-                        continue
-                return False
+            else: # close bracket
+                if not stack or (stack and stack.pop() != mapping[c])
+                    return False
         stack_len = len(stack)
         del mapping, stack
         return stack_len==0
