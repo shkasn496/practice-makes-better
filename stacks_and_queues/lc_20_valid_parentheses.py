@@ -20,3 +20,20 @@ class Solution:
         stack_len = len(stack)
         del mapping, stack
         return stack_len==0
+
+class Solution:
+    def isValid(self, s: str) -> bool:
+        if len(s) % 2 != 0 : return False
+        mapping = {")":"(", "}":"{", "]":"["}
+        stack = []
+        flag = False
+        for c in s:
+            if c not in mapping.keys(): # open bracket
+                stack.append(c)
+            else: # close bracket
+                if not stack or mapping[c] != stack.pop():
+                    flag = True
+            if flag: break
+        flag = flag | len(stack)>0
+        del stack, mapping
+        return not flag
