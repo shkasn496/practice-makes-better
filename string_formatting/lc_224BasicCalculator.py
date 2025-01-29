@@ -38,3 +38,31 @@ class Solution:
                 operand=0
         del stack
         return result+sign*operand
+
+"""
+Solution 2: Using recursion
+
+TC: O(n)
+SC: O(n) for recursion stack
+"""
+class Solution:
+    def calculate(self, s: str) -> int:
+        def recursion_helper(idx):
+            res, prev_num, sign = 0, 0, 1
+            while idx < len(s):
+                c = s[idx]
+                if c.isdigit():
+                    prev_num = prev_num * 10 + int(c)
+                elif c in '+-':
+                    res = res + prev_num * sign
+                    prev_num = 0
+                    sign = 1 if c == '+' else -1
+                elif c == "(":
+                    sub_res, idx = recursion_helper(idx + 1)
+                    res = res + sub_res * sign
+                elif c == ")":
+                    res = res + prev_num * sign
+                    return res, idx
+                idx += 1
+            return res + prev_num * sign
+        return recursion_helper(0)
