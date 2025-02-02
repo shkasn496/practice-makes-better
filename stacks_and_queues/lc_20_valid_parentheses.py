@@ -15,7 +15,7 @@ class Solution:
             if c not in mapping: # open bracket
                 stack.append(c)
             else: # close bracket
-                if not stack or (stack and stack.pop() != mapping[c])
+                if not stack or (stack and stack.pop() != mapping[c]):
                     return False
         stack_len = len(stack)
         del mapping, stack
