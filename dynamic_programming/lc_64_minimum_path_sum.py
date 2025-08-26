@@ -15,9 +15,12 @@ class Solution:
             for c in range(n):
                 dp[r][c]=grid[r][c]
                 if (r,c)==(0,0):continue
-                if c==0:dp[r][c]+=dp[r-1][c]
-                elif r==0:dp[r][c]+=dp[r][c-1]
-                else:dp[r][c]+=min(dp[r][c-1], dp[r-1][c])#left,up
+                if c == 0:
+                    dp[r][c] += dp[r - 1][c]  # cumsum on first col
+                elif r == 0:
+                    dp[r][c] += dp[r][c - 1]  # cumsum on first row
+                else:
+                    dp[r][c] += min(dp[r][c - 1], dp[r - 1][c])  # check left, up
         min_sum=dp[m-1][n-1]
         del dp
         return min_sum
