@@ -1,5 +1,27 @@
 #https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
 """
+Solution 2: More efficient solution
+Runtime 0ms Beats 100.00%
+Memory 17.90 MB Beats 80.24%
+TC: O(logN)
+SC:O(1)
+"""
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        if nums[-1] > nums[0]: #unrotated
+            return nums[0]
+        l, r = 0, len(nums)-1
+        min_elem = nums[r]
+        while l < r:
+            mid = l + (r-l)//2
+            min_elem = min(min_elem, nums[mid])
+            if nums[mid] > nums[l]: # move right
+                l = mid
+            else: # move left
+                r = mid
+        return min_elem
+
+"""
 Success
 Details 
 Runtime: 41 ms, faster than 95.74% of Python3 online submissions for Find Minimum in Rotated Sorted Array.

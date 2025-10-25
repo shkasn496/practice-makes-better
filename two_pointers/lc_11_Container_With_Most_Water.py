@@ -17,6 +17,23 @@ class Solution:
             else:end-=1
         return max_area
 
+"""
+Solution 1.b: Same code logic
+"""
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        if len(height)==2: return min(height)**2
+        max_area = 1
+        left, right = 0, len(height)-1
+        while left < right:
+            container_height = min(height[left], height[right])
+            container_width = right - left
+            max_area = max(max_area, container_width * container_height)
+            if height[left] <= height[right]:
+                left += 1
+            else:
+                right -= 1
+        return max_area
 
 # Cleaner soluton, slightly slower since calls happening to a helper function
 class Solution:

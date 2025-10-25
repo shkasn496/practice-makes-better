@@ -28,3 +28,24 @@ class Solution:
             l+=1
             r-=1
         return True
+
+"""
+Solution 3: Simple helper with palindrome check happening from 
+            inside out
+"""
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        if len(s) == 0: return True
+        s = [c.lower() for c in s if c.isalnum()] # clean up the string
+        mid = len(s)//2
+        return self.palindrome_checker(s, mid-1, mid) if len(s) % 2 == 0 else \
+        self.palindrome_checker(s, mid, mid)
+
+    def palindrome_checker(self, s, left, right):
+        while 0 <= left <= right < len(s):
+            if s[left] == s[right]:
+                left -= 1
+                right += 1
+            else:
+                return False
+        return True
