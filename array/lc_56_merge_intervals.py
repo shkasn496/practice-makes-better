@@ -21,3 +21,23 @@ class Solution:
             else:#no overlap
                 output.append([s2,e2])
         return output
+    
+"""
+Solution 2: Same logic, just comparing 
+"""
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        if not intervals: return intervals
+        intervals.sort()
+        result = [intervals[0]]
+        for s2, e2 in intervals[1:]:
+            s1, e1 = result[-1]
+            if e1 <= s2:
+                if e1 == s2: # extend start and end range
+                    result[-1] = [s1, e2]
+                else: # no overlap
+                    result.append([s2, e2])
+            elif s2 < e1:
+                if e2 >= e1: # only add if e2 is greater
+                    result[-1] = [s1, e2]
+        return result

@@ -15,12 +15,13 @@ SC:O(n) Recursive stack
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         if not root:return 0
-        self.diameter=0
+        diameter=0
         def longest_path(node):
             if not node:return 0
+            nonlocal diameter
             left=longest_path(node.left)
             right=longest_path(node.right)
-            self.diameter=max(self.diameter, left+right)
+            diameter=max(diameter, left+right)
             return max(left,right)+1
         longest_path(root)
-        return self.diameter
+        return diameter
