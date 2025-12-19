@@ -32,6 +32,22 @@ SC: O(k) + O(H) output array + recursive stack for height of tree
 """
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        if not root: return -1
+        stack = []
+        while root or len(stack):
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            k -= 1
+            if k == 0:
+                return root.val
+            root = root.right
+        del stack
+        return -1
+
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         stack=[]
         def inorder_traversal(node):
             if not node:return

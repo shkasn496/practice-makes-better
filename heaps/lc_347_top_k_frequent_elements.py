@@ -18,22 +18,25 @@ class Solution:
 
 """
 SOlution 2: Min Heap, is faster than max heap since we are only 
-            popping elements greater than k
+            storing k elements
 """
-from collections import defaultdict
 import heapq
+from collections import defaultdict
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        if k == len(nums): return nums
-        count = defaultdict(int)
+        # store the frequencies of the elements
+        freq_map = defaultdict(int)
         for n in nums:
-            count[n] += 1
-        if len(count) == len(nums):return nums[:k] # case when m==N
-        min_heap = []
-        for num, freq in count.items():
-            heapq.heappush(min_heap, (freq, num))
-        while len(min_heap) > k:
-            heapq.heappop(min_heap)
-        result = [elem[1] for elem in min_heap]
-        del count, min_heap
+            freq_map[n] += 1
+        # use a minheap to get top K frequent elements
+        minheap = []
+        for n, freq in freq_map.items():
+            if len(minheap) < k:
+                heapq.heappush(minheap, (freq, n))
+            else:
+                if freq > minheap[0][0]:
+                    heapq.heappop(minheap)
+                    heapq.heappush(minheap, (freq, n))
+        result = [elem[1] for elem in minheap]
+        del minheap
         return result
