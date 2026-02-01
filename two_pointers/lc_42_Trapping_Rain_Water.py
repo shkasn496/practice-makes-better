@@ -9,18 +9,29 @@ SC:O(n)
 class Solution:
     def trap(self, height: List[int]) -> int:
         n = len(height)
-        if n==1:return 0
-        left_height, right_height = [height[0]], [height[n-1]]
-        for h in height[1:]:
-            left_height.append(max(h, left_height[-1]))
-        for h in reversed(height[:n-1]):
-            right_height.append(max(h, right_height[-1]))
-        right_height = list(reversed(right_height))
-        trapped_rain_water = 0
+        if n < 2: return 0
+        prefix_suffix_max = [0] * n # store left and right max at each index
+        # get left max
         for i in range(n):
-            trapped_rain_water+=min(left_height[i], right_height[i])-height[i]
-        del left_height, right_height
-        return trapped_rain_water
+            if i==0:
+                prefix_suffix_max[i] = height[i]
+            else:
+                prefix_suffix_max[i] = max(height[i], prefix_suffix_max[i-1])
+        # get right max
+        for i in range(n-1, -1, -1):
+            if i==n-1:
+                prefix_suffix_max[i] = min(height[i], prefix_suffix_max[i])
+            else:
+                prefix_suffix_max[i] = min(max(height[i], prefix_suffix_max[i+1]), prefix_suffix_max[i])
+        total_rain_water = 0
+        for i in range(n):
+            curr_ht = height[i]
+            border_ht = prefix_suffix_max[i]
+            unit_rain_water = border_ht - curr_ht
+            if unit_rain_water > 0:
+                total_rain_water += unit_rain_water
+        del prefix_suffix_max
+        return total_rain_water
 
 """
 Solution 2: (Optimized in space) Using two pointers and variables to hold 

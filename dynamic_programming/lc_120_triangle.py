@@ -13,8 +13,10 @@ class Solution:
     def minimumTotal(self, triangle: List[List[int]]) -> int:
         if len(triangle) == 1: return triangle[-1][-1]
         N = len(triangle)
-        cache = triangle[N-1]
-        for i in range(N-2, -1, -1):
-            for j in range(len(triangle[i])):
-                cache[j] = min(cache[j]+triangle[i][j], cache[j+1]+triangle[i][j])
-        return cache[0]
+        last_row = triangle[N-1]
+        for r in range(N-2, -1, -1):
+            for i in range(len(triangle[r])):
+                last_row[i] = min(last_row[i], last_row[i+1]) + triangle[r][i]
+        min_path_sum = last_row[0]
+        del last_row
+        return min_path_sum

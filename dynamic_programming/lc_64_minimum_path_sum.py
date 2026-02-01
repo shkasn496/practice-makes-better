@@ -35,17 +35,20 @@ SC:O(n)
 """
 class Solution:
     def minPathSum(self, grid: List[List[int]]) -> int:
-        m,n = len(grid), len(grid[0])
-        dp=[0]*n#1d cache
+        m, n = len(grid), len(grid[0])
+        prev_row = [0]*n
         for r in range(m):
-            temp_dp=[0]*n
+            curr_row = [0]*n
             for c in range(n):
-                temp_dp[c]=grid[r][c]
-                if (r,c)==(0,0):continue
-                if c==0:temp_dp[c]+=dp[c]
-                elif r==0:temp_dp[c]+=temp_dp[c-1]
-                else:temp_dp[c]+=min(temp_dp[c-1], dp[c])#left,up
-            dp=temp_dp
-        min_sum=dp[-1]
-        del dp
-        return min_sum
+                curr_row[c] = grid[r][c]
+                if (r,c) == (0, 0): continue
+                if c==0:
+                    curr_row[c] += prev_row[c]
+                elif r==0:
+                    curr_row[c] += curr_row[c-1]
+                else:
+                    curr_row[c] += min(prev_row[c], curr_row[c-1])
+            prev_row = curr_row
+        min_path_sum = prev_row[-1]
+        del prev_row
+        return min_path_sum

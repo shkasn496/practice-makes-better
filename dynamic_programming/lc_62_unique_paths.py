@@ -23,14 +23,15 @@ SC:O(n)
 """
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        prev_dp =[1]*n #cache 1d array
-        for i in range(1,m):
-            temp_dp=[1]*n
-            for j in range(1,n):
-                #up from prev_dp and left from temp_dp
-                temp_dp[j]=prev_dp[j]+temp_dp[j-1]
-            prev_dp=temp_dp
-            del temp_dp
-        cache = prev_dp[-1]
-        del prev_dp
-        return cache
+        if m == 1 or n == 1: return 1
+        prev_row = [1]*n
+        max_paths = 0
+        for r in range(1,m):
+            curr_row = [0]*n
+            curr_row[0] = 1
+            for c in range(1, n):
+                curr_row[c] = prev_row[c] + curr_row[c-1] # top and left values
+            prev_row = curr_row
+            max_paths = curr_row[-1]
+        del prev_row
+        return max_paths

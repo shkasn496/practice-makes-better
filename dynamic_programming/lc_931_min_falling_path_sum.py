@@ -79,3 +79,20 @@ class Solution:
         min_path_sum=min(bottom_dp)
         del bottom_dp
         return min_path_sum
+
+"""
+Solution 4: Tabulation, but use the original matrix
+
+TC: O(n ** 2)
+SC: O(1)
+"""
+class Solution:
+    def minFallingPathSum(self, matrix: List[List[int]]) -> int:
+        n = len(matrix)
+        for r in range(1,n):
+            for c in range(n):
+                matrix[r][c] += min(matrix[r-1][max(0, c-1)],
+                                matrix[r-1][max(0, c)],
+                                matrix[r-1][min(n-1, c+1)]
+                                )
+        return min(matrix[-1])

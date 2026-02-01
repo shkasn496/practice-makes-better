@@ -34,19 +34,19 @@ SC: O(n)
 class Solution:
     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
         m, n = len(obstacleGrid), len(obstacleGrid[0])
-        prev_dp=[0]*n
-        prev_dp[0]=1 if obstacleGrid[0][0]!=1 else 0
-        for i in range(m):
-            temp_dp=[0]*n
-            temp_dp[0]=prev_dp[0] if obstacleGrid[i][0]!=1 else 0
-            for j in range(n):
-                if obstacleGrid[i][j]==1:continue
-                if i>0 and j>0 and obstacleGrid[i-1][j]!=1:
-                    temp_dp[j]+=prev_dp[j] #up
-                if j>0 and obstacleGrid[i][j-1]!=1:
-                    temp_dp[j]+=temp_dp[j-1] #left
-            prev_dp=temp_dp
-            del temp_dp
-        unique_paths = prev_dp[-1]
-        del prev_dp
-        return unique_paths
+        if obstacleGrid[0][0] == 1 or obstacleGrid[m-1][n-1] == 1: return 0
+        prev_row = [0]* n
+        prev_row[0] = 1 # start place
+        for r in range(m):
+            curr_row = [0]*n
+            curr_row[0] = prev_row[0] if obstacleGrid[r][0]!= 1 else 0
+            for c in range(n):
+                if obstacleGrid[r][c] == 1: continue
+                if r > 0 and c > 0 and obstacleGrid[r-1][c]!=1:
+                    curr_row[c] += prev_row[c] # top
+                if c > 0 and obstacleGrid[r][c-1] != 1:
+                    curr_row[c] += curr_row[c-1] # left
+            prev_row = curr_row
+        max_paths = prev_row[-1]
+        del prev_row
+        return max_paths
