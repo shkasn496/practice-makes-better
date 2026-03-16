@@ -8,14 +8,18 @@ SC:O(n)
 """
 class Solution:
     def minRemoveToMakeValid(self, s: str) -> str:
-        stack=[]
-        output=list(s)
-        for i, c in enumerate(s):
-            if c=='(':stack.append(i)
-            elif c==')':
-                if stack and s[stack[-1]]=='(':stack.pop()
-                else:stack.append(i)
+        n = len(s)
+        if not n : return s
+        stack = [] # only store indexes of parenthesis that either will match or will be replaced with ""
+        for idx, c in enumerate(s):
+            if c == "(":
+                stack.append(idx)
+            elif c == ")":
+                if stack and s[stack[-1]] == "(":
+                    stack.pop()
+                else:
+                    stack.append(idx)
+        ans = list(s)
         while stack:
-            output[stack.pop()]=''
-        del stack
-        return "".join(output)
+            ans[stack.pop()]= "" # replace incomplete parentheses with ""
+        return "".join(ans)

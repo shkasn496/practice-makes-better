@@ -35,3 +35,16 @@ class Solution:
                     duplicates += 1
             fast += 1
         return slow
+
+"""
+Solution 2:
+"""
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        if len(nums) < 3: return len(nums)
+        i = 2
+        for elem in nums[2:]:
+            if nums[i-2] != elem:
+                nums[i] = elem
+                i += 1
+        return i

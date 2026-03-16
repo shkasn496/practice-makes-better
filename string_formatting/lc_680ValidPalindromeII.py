@@ -24,3 +24,25 @@ class Solution:
             else:
                 return checkPalindrome(i1, i2-1) or checkPalindrome(i1+1,i2)
         return True
+
+"""
+Solution
+"""
+class Solution:
+    def validPalindrome(self, s: str) -> bool:
+        if len(s) < 2: return True
+        def check_palindrome(string, left, right):
+            while left < right:
+                if string[left] != string[right]:
+                    return False
+                left += 1
+                right -= 1
+            return True
+        left, right = 0, len(s) - 1
+        while left < right:
+            if s[left] != s[right]:
+                return check_palindrome(s, left + 1, right) or \
+                check_palindrome(s, left, right-1)
+            left += 1
+            right -= 1
+        return True
