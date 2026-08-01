@@ -19,3 +19,22 @@ class Solution:
             elif nums[left]>nums[right]:return left
             else:return right
         return left 
+
+"""
+Solution 2:
+"""
+class Solution:
+    def findPeakElement(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n == 1: return n-1
+        l, r = 0, n-1
+        while l < r:
+            mid = l + (r-l)//2
+            if nums[mid-1]<nums[mid]>nums[mid+1]:
+                return mid
+            elif nums[mid+1]>nums[mid]:
+                l=mid+1
+            else:
+                r = mid
+        idx = l if nums[l]>nums[l-1] else l-1
+        return idx if idx >=0 else 0

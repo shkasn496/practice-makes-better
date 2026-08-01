@@ -25,3 +25,26 @@ class Solution:
             return
         backtrack(set(), [])
         return permutations
+    
+
+"""
+Solution 2: Better solution using hashmap
+TC: O(n * n!)
+"""
+from collections import Counter
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        if not nums: return nums
+        result, n = [], len(nums)
+        def backtrack(counter, subset):
+            if len(subset) == n:
+                result.append(subset)
+                return
+            for num in counter:
+                if counter[num] > 0:
+                    counter[num] -= 1
+                    backtrack(counter, subset + [num])
+                    counter[num] += 1
+            return
+        backtrack(Counter(nums), [])
+        return result

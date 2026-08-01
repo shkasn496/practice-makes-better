@@ -42,9 +42,9 @@ Solution 2:
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
         if len(nums) < 3: return len(nums)
-        i = 2
-        for elem in nums[2:]:
-            if nums[i-2] != elem:
-                nums[i] = elem
-                i += 1
-        return i
+        slow = 2
+        for fast in nums[2:]:
+            if nums[slow-2] != fast:
+                nums[slow] = fast
+                slow += 1
+        return slow

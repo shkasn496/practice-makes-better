@@ -21,7 +21,7 @@ Runtime 59 ms Beats 92.79%
 Memory 13.8 MB Beats 97.3%
 
 TC:O(n)
-SC:O(n)
+SC:O(1)
 """
 class Solution:
     def isPalindrome(self, x: int) -> bool:
@@ -31,3 +31,17 @@ class Solution:
             num_r=num_r*10+x%10
             x//=10
         return num_r==num_og
+
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        if x < 0 : return False
+        if x < 10: return True
+        if x % 10==0: return False
+        temp = x
+        reversed_no = 0
+        while temp:
+            digit = temp % 10
+            reversed_no = reversed_no * 10 + digit
+            temp = temp // 10
+        return x == reversed_no
+        
